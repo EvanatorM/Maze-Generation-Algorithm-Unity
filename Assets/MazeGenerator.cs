@@ -6,6 +6,7 @@ public class MazeGenerator : MonoBehaviour
 {
     [SerializeField] MazeNode nodePrefab;
     [SerializeField] Vector2Int mazeSize;
+    [SerializeField] float nodeSize;
 
     private void Start()
     {
@@ -22,7 +23,7 @@ public class MazeGenerator : MonoBehaviour
         {
             for (int y = 0; y < size.y; y++)
             {
-                Vector3 nodePos = new Vector3(x - (size.x / 2f), 0, y - (size.y / 2f));
+                Vector3 nodePos = new Vector3(x - (size.x / 2f), 0, y - (size.y / 2f)) * nodeSize;
                 MazeNode newNode = Instantiate(nodePrefab, nodePos, Quaternion.identity, transform);
                 nodes.Add(newNode);
             }
