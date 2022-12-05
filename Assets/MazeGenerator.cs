@@ -23,7 +23,7 @@ public class MazeGenerator : MonoBehaviour
         {
             for (int y = 0; y < size.y; y++)
             {
-                Vector3 nodePos = new Vector3(x - (size.x / 2f), 0, y - (size.y / 2f)) * nodeSize;
+                Vector3 nodePos = new Vector3(x - (size.x / 2f), 0, y - (size.y / 2f));
                 MazeNode newNode = Instantiate(nodePrefab, nodePos, Quaternion.identity, transform);
                 nodes.Add(newNode);
             }
@@ -34,6 +34,7 @@ public class MazeGenerator : MonoBehaviour
 
         // Choose starting node
         currentPath.Add(nodes[Random.Range(0, nodes.Count)]);
+        currentPath[0].SetState(NodeState.Current);
 
         while (completedNodes.Count < nodes.Count)
         {
@@ -113,11 +114,13 @@ public class MazeGenerator : MonoBehaviour
                 }
 
                 currentPath.Add(chosenNode);
+                chosenNode.SetState(NodeState.Current);
             }
             else
             {
                 completedNodes.Add(currentPath[currentPath.Count - 1]);
 
+                currentPath[currentPath.Count - 1].SetState(NodeState.Completed);
                 currentPath.RemoveAt(currentPath.Count - 1);
             }
         }
